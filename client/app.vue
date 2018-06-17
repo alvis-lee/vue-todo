@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="cover"></div>
-    <Header></Header>
+    <Header>aa</Header>
     <todo></todo>
     <Footer></Footer>
   </div>
