@@ -3,7 +3,7 @@
     <div id="cover"></div>
     <Header></Header>
     <todo></todo>
-    <Footer></Footer>
+    <Footer>aa</Footer>
   </div>
 </template>
 
