@@ -1,3 +1,11 @@
 <template>
   <div>login page</div>
 </template>
+
+<script>
+export default {
+  metaInfo: {
+    title: 'login title'
+  }
+}
+</script>

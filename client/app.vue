@@ -3,8 +3,6 @@
     <div id='cover'>{{counter}} >> {{fullname}}</div>
     <Header></Header>
     <router-link to='/app'>app</router-link>&nbsp;&nbsp;
-    <router-link to='/app/123'>app123</router-link>&nbsp;&nbsp;
-    <router-link to='/app/456'>app456</router-link>&nbsp;&nbsp;
     <router-link to='/login'>login</router-link>&nbsp;&nbsp;
     <!-- <todo></todo> -->
     <transition name='fade'>
@@ -19,9 +17,12 @@
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import Header from './views/layout/header.vue'
 import Footer from './views/layout/footer.jsx'
-// import Todo from './views/todo/todo.vue'
+import Todo from './views/todo/todo.vue'
 
 export default {
+  metaInfo: {
+    title: 'app title'
+  },
   methods: {
     // ...mapActions(['updateCountAsync', 'a/add', 'b/testAction']),
     // ...mapMutations(['updateCount', 'a/updateText'])
@@ -65,13 +66,13 @@ export default {
     //   time: 2000
     // })
 
-    this.updateCountAsync({ num: 50, time: 2000 })
+    // this.updateCountAsync({ num: 50, time: 2000 })
 
-    let i = 0
-    setInterval(() => {
-      // this.$store.commit('updateCount', {num:i++})
-      this.updateCount({ num: i++ })
-    }, 1000)
+    // let i = 0
+    // setInterval(() => {
+    //   // this.$store.commit('updateCount', {num:i++})
+    //   this.updateCount({ num: i++ })
+    // }, 1000)
 
     // this.updateText('776655')
     // this['a/updateText']('44444')
@@ -80,8 +81,8 @@ export default {
   },
   components: {
     Header,
-    Footer
-    // Todo
+    Footer,
+    Todo
   }
 }
 </script>
