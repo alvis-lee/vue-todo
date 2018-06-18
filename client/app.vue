@@ -1,27 +1,92 @@
 <template>
-  <div id="app">
-    <div id="cover"></div>
+  <div id='app'>
+    <div id='cover'>{{counter}} >> {{fullname}}</div>
     <Header></Header>
-    <todo></todo>
+    <router-link to='/app'>app</router-link>&nbsp;&nbsp;
+    <router-link to='/app/123'>app123</router-link>&nbsp;&nbsp;
+    <router-link to='/app/456'>app456</router-link>&nbsp;&nbsp;
+    <router-link to='/login'>login</router-link>&nbsp;&nbsp;
+    <!-- <todo></todo> -->
+    <transition name='fade'>
+      <router-view></router-view>
+    </transition>
     <Footer></Footer>
+    <!-- <router-view name='a'></router-view> -->
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import Header from './views/layout/header.vue'
 import Footer from './views/layout/footer.jsx'
-import Todo from './views/todo/todo.vue'
+// import Todo from './views/todo/todo.vue'
 
 export default {
+  methods: {
+    // ...mapActions(['updateCountAsync', 'a/add', 'b/testAction']),
+    // ...mapMutations(['updateCount', 'a/updateText'])
+    ...mapActions(['updateCountAsync']),
+    ...mapMutations(['updateCount'])
+  },
+  computed: {
+    // textA() {
+    //   return this.$store.state.a.text
+    // },
+    // textB() {
+    //   return this.$store.state.b.text
+    // },
+    ...mapState({
+      counter: state => state.count
+      // textA: state => state.a.text,
+      // textC: state => state.c.text
+    }),
+    // ...mapState({
+    //   counter: 'count'
+    // }),
+    // ...mapState(['count']),
+    // count() {
+    //   return this.$store.state.count
+    // },
+    // ...mapGetters(['fullname', 'a/textPlus'])
+    ...mapGetters({
+      fullname: 'fullname'
+      // textPlus: 'a/textPlus'
+    })
+    // fullname() {
+    //   return this.$store.getters.fullname
+    // }
+  },
+  mounted() {
+    // console.log(this.$route)
+    console.log(this.$store)
+
+    // this.$store.dispatch('updateCountAsync', {
+    //   num: 5,
+    //   time: 2000
+    // })
+
+    this.updateCountAsync({ num: 50, time: 2000 })
+
+    let i = 0
+    setInterval(() => {
+      // this.$store.commit('updateCount', {num:i++})
+      this.updateCount({ num: i++ })
+    }, 1000)
+
+    // this.updateText('776655')
+    // this['a/updateText']('44444')
+    // this['a/add']()
+    // this['b/testAction']()
+  },
   components: {
     Header,
-    Footer,
-    Todo
+    Footer
+    // Todo
   }
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang='stylus' scoped>
 #app {
   position: absolute;
   left: 0;

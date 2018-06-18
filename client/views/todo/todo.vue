@@ -27,7 +27,8 @@ import Item from './item.vue'
 import Tabs from './tabs.vue'
 let id = 0
 export default {
-  data () {
+  props: ['id'],
+  data() {
     return {
       todos: [],
       filter: 'all'
@@ -38,7 +39,7 @@ export default {
     Tabs
   },
   computed: {
-    filteredTodos () {
+    filteredTodos() {
       if (this.filter === 'all') {
         return this.todos
       }
@@ -47,7 +48,7 @@ export default {
     }
   },
   methods: {
-    addTodo (e) {
+    addTodo(e) {
       this.todos.unshift({
         id: id++,
         content: e.target.value.trim(),
@@ -55,26 +56,47 @@ export default {
       })
       e.target.value = ''
     },
-    deleteTodo (id) {
+    deleteTodo(id) {
       this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
     },
-    toggleFilter (state) {
+    toggleFilter(state) {
       this.filter = state
     },
-    clearAllCompleted () {
+    clearAllCompleted() {
       this.todos = this.todos.filter(todo => !todo.completed)
+    }
+  },
+  mounted() {
+    // console.log(this.id)
+    console.log('todo mounted >>>')
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log(`todo component beforeRouteEnter 。。。。。`, this)
+    next(vm => {
+      console.log(`todo component beforeRouteEnter fallback 。。。。。`, vm)
+    })
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log(`todo component beforeRouteUpdate 。。。。。`, this)
+    next()
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log(`todo component beforeRouteLeave 。。。。。`, this)
+    if (global.confirm('确认离开')) {
+      next()
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.real-app{
-  width 600px
-  margin 0 auto
-  box-shadow 0 0 5px #666
+.real-app {
+  width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 0 5px #666;
 }
-.add-input{
+
+.add-input {
   position: relative;
   margin: 0;
   width: 100%;
@@ -92,7 +114,7 @@ export default {
   font-smoothing: antialiased;
   padding: 16px 16px 16px 60px;
   border: none;
-  box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
+  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
 }
 </style>
 
