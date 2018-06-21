@@ -2,12 +2,14 @@
   <div id='app'>
     <div id='cover'>{{counter}} >> {{fullname}}</div>
     <Header></Header>
-    <router-link to='/app'>app</router-link>&nbsp;&nbsp;
-    <router-link to='/login'>login</router-link>&nbsp;&nbsp;
+    <!-- <router-link to='/app'>app</router-link>&nbsp;&nbsp;
+    <router-link to='/login'>login</router-link>&nbsp;&nbsp; -->
     <!-- <todo></todo> -->
     <transition name='fade'>
       <router-view></router-view>
     </transition>
+    <button @click='clickme'>点我 qq</button>
+    <!-- <notification content='test notify'/> -->
     <Footer></Footer>
     <!-- <router-view name='a'></router-view> -->
   </div>
@@ -27,7 +29,13 @@ export default {
     // ...mapActions(['updateCountAsync', 'a/add', 'b/testAction']),
     // ...mapMutations(['updateCount', 'a/updateText'])
     ...mapActions(['updateCountAsync']),
-    ...mapMutations(['updateCount'])
+    ...mapMutations(['updateCount']),
+    clickme() {
+      this.$notify({
+        content: 'text $notify',
+        btn: 'close'
+      })
+    }
   },
   computed: {
     // textA() {
@@ -59,7 +67,7 @@ export default {
   },
   mounted() {
     // console.log(this.$route)
-    console.log(this.$store)
+    // console.log(this.$store)
 
     // this.$store.dispatch('updateCountAsync', {
     //   num: 5,
