@@ -1,10 +1,8 @@
 <template>
   <section class="real-app">
     <div class='tab-container'>
-      <tabs value='1'>
-      <tab label='tab1' index='1' />
-      <tab index='2'><span slot='label' style='color:red;'>tab2</span></tab>
-      <tab label='tab3' index='3' />
+    <tabs :value='filter' @change='handleChangeTab'>
+      <tab :label='tab' :index='tab' v-for='tab in stats' :key='tab' ></tab>
     </tabs>
     </div>
     <input
@@ -12,6 +10,7 @@
       class="add-input"
       autofocus="autofocus"
       placeholder="接下去要做什么？"
+      v-model="inputContent"
       @keyup.enter="addTodo"
     >
     <item
@@ -23,7 +22,6 @@
     <Helper
       :filter="filter"
       :todos="todos"
-      @toggle="toggleFilter"
       @clearAllCompleted="clearAllCompleted"
     />
   </section>
@@ -31,7 +29,7 @@
 
 <script>
 import Item from './item.vue'
-import Helper from './tabs.vue'
+import Helper from './helper.vue'
 let id = 0
 export default {
   metaInfo: {
@@ -40,7 +38,9 @@ export default {
   data() {
     return {
       todos: [],
-      filter: 'all'
+      filter: 'all',
+      inputContent: '',
+      stats: ['all', 'active', 'completed']
     }
   },
   components: {
@@ -68,16 +68,20 @@ export default {
     deleteTodo(id) {
       this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
     },
-    toggleFilter(state) {
-      this.filter = state
-    },
     clearAllCompleted() {
       this.todos = this.todos.filter(todo => !todo.completed)
+    },
+    handleChangeTab(value) {
+      this.filter = value
     }
   },
   mounted() {
     // console.log(this.id)
     console.log('todo mounted >>>')
+
+    // setTimeout(() => {
+    //   this.tabValue = '2'
+    // }, 2000)
   },
   beforeRouteEnter(to, from, next) {
     console.log(`todo component beforeRouteEnter 。。。。。`, this)
