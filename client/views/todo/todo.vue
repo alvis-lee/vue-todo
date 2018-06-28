@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import Item from './item.vue'
 import Helper from './helper.vue'
 let id = 0
@@ -37,7 +38,7 @@ export default {
   },
   data() {
     return {
-      todos: [],
+      // todos: [],
       filter: 'all',
       inputContent: '',
       stats: ['all', 'active', 'completed']
@@ -48,6 +49,7 @@ export default {
     Helper
   },
   computed: {
+    ...mapState(['todos']),
     filteredTodos() {
       if (this.filter === 'all') {
         return this.todos
@@ -57,6 +59,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['fetchTodos']),
     addTodo(e) {
       this.todos.unshift({
         id: id++,
@@ -78,6 +81,7 @@ export default {
   mounted() {
     // console.log(this.id)
     console.log('todo mounted >>>')
+    this.fetchTodos()
 
     // setTimeout(() => {
     //   this.tabValue = '2'

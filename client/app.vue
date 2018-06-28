@@ -1,6 +1,6 @@
 <template>
   <div id='app'>
-    <div id='cover'>{{counter}} >> {{fullname}}</div>
+    <!-- <div id='cover'>{{counter}} >> {{fullname}}</div> -->
     <Header></Header>
     <!-- <router-link to='/app'>app</router-link>&nbsp;&nbsp;
     <router-link to='/login'>login</router-link>&nbsp;&nbsp; -->
@@ -8,7 +8,7 @@
     <transition name='fade'>
       <router-view></router-view>
     </transition>
-    <button @click='clickme'>点我 qq</button>
+    <!-- <button @click='clickme'>点我 qq</button> -->
     <!-- <notification content='test notify'/> -->
     <Footer></Footer>
     <!-- <router-view name='a'></router-view> -->
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+// import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import Header from './views/layout/header.vue'
 import Footer from './views/layout/footer.jsx'
 import Todo from './views/todo/todo.vue'
@@ -28,14 +28,14 @@ export default {
   methods: {
     // ...mapActions(['updateCountAsync', 'a/add', 'b/testAction']),
     // ...mapMutations(['updateCount', 'a/updateText'])
-    ...mapActions(['updateCountAsync']),
-    ...mapMutations(['updateCount']),
-    clickme() {
-      this.$notify({
-        content: 'text $notify',
-        btn: 'close'
-      })
-    }
+    // ...mapActions(['updateCountAsync']),
+    // ...mapMutations(['updateCount']),
+    // clickme() {
+    //   this.$notify({
+    //     content: 'text $notify',
+    //     btn: 'close'
+    //   })
+    // }
   },
   computed: {
     // textA() {
@@ -44,11 +44,11 @@ export default {
     // textB() {
     //   return this.$store.state.b.text
     // },
-    ...mapState({
-      counter: state => state.count
-      // textA: state => state.a.text,
-      // textC: state => state.c.text
-    }),
+    // ...mapState({
+    //   counter: state => state.count
+    //   // textA: state => state.a.text,
+    //   // textC: state => state.c.text
+    // }),
     // ...mapState({
     //   counter: 'count'
     // }),
@@ -57,10 +57,10 @@ export default {
     //   return this.$store.state.count
     // },
     // ...mapGetters(['fullname', 'a/textPlus'])
-    ...mapGetters({
-      fullname: 'fullname'
-      // textPlus: 'a/textPlus'
-    })
+    // ...mapGetters({
+    //   fullname: 'fullname'
+    //   // textPlus: 'a/textPlus'
+    // })
     // fullname() {
     //   return this.$store.getters.fullname
     // }
