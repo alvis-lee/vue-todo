@@ -9,7 +9,7 @@ const request = axios.create({
 
 const createError = (code, resp) => {
   const err = new Error(resp.message)
-  err.code = code
+  if (code) err.code = code
   return err
 }
 

@@ -1,11 +1,14 @@
 <template>
   <div id='app'>
     <!-- <div id='cover'>{{counter}} >> {{fullname}}</div> -->
+    <div id="loading" v-show='loading'>
+      <loading></loading>
+    </div>
     <Header></Header>
     <!-- <router-link to='/app'>app</router-link>&nbsp;&nbsp;
     <router-link to='/login'>login</router-link>&nbsp;&nbsp; -->
     <!-- <todo></todo> -->
-    <transition name='fade'>
+    <transition name='fade' mode='out-in'>
       <router-view></router-view>
     </transition>
     <!-- <button @click='clickme'>点我 qq</button> -->
@@ -16,10 +19,16 @@
 </template>
 
 <script>
-// import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import {
+  mapState
+  // , mapGetters
+  // , mapMutations
+  // , mapActions
+} from 'vuex'
 import Header from './views/layout/header.vue'
 import Footer from './views/layout/footer.jsx'
-import Todo from './views/todo/todo.vue'
+// import Todo from './views/todo/todo.vue'
+import Loading from './components/loading/loading.vue'
 
 export default {
   metaInfo: {
@@ -38,6 +47,7 @@ export default {
     // }
   },
   computed: {
+    ...mapState(['loading'])
     // textA() {
     //   return this.$store.state.a.text
     // },
@@ -90,7 +100,8 @@ export default {
   components: {
     Header,
     Footer,
-    Todo
+    Loading
+    // Todo
   }
 }
 </script>
@@ -113,6 +124,19 @@ export default {
   background-color: #999;
   opacity: 0.9;
   z-index: -1;
+}
+
+#loading {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
 

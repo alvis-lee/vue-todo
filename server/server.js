@@ -17,7 +17,7 @@ const app = new Koa()
 app.keys = ['vue ssr tech']
 app.use(koaSession({
   key: 'v-ssr-id',
-  maxAge: 2 * 60 * 60 * 1000
+  maxAge: 10 * 60 * 1000
 }, app))
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -58,8 +58,10 @@ app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
 let pageRouter
 if (isDev) {
   pageRouter = require('./routers/dev-ssr')
+  // pageRouter = require('./routers/dev-ssr-no-bundle')
 } else {
-  pageRouter = require('./routers/ssr')
+  // pageRouter = require('./routers/ssr')
+  pageRouter = require('./routers/ssr-no-bundle')
 }
 
 app.use(pageRouter.routes()).use(pageRouter.allowedMethods())

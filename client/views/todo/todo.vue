@@ -11,13 +11,14 @@
       autofocus="autofocus"
       placeholder="接下去要做什么？"
       v-model="inputContent"
-      @keyup.enter="addTodo"
+      @keyup.enter="handleAdd"
     >
     <item
       :todo="todo"
       v-for="todo in filteredTodos"
       :key="todo.id"
       @del="deleteTodo"
+      @toggle='toggleTodoState'
     />
     <Helper
       :filter="filter"
@@ -31,7 +32,7 @@
 import { mapState, mapActions } from 'vuex'
 import Item from './item.vue'
 import Helper from './helper.vue'
-let id = 0
+// let id = 0
 export default {
   metaInfo: {
     title: 'todo title'
@@ -59,20 +60,36 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchTodos']),
-    addTodo(e) {
-      this.todos.unshift({
-        id: id++,
-        content: e.target.value.trim(),
+    ...mapActions(['fetchTodos', 'addTodo', 'deleteTodo', 'updateTodo', 'deleteAllCompleted']),
+    handleAdd(e) {
+      const content = e.target.value.trim()
+      if (!content) {
+        this.$notify({
+          content: '必须输入内容'
+        })
+        return
+      }
+      const todo = {
+        content,
         completed: false
-      })
+      }
+      this.addTodo(todo)
       e.target.value = ''
     },
-    deleteTodo(id) {
-      this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
+    // deleteTodo(id) {
+    //   this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
+    // },
+    toggleTodoState(todo) {
+      this.updateTodo({
+        id: todo.id,
+        todo: Object.assign({}, todo, {
+          completed: !todo.completed
+        })
+      })
     },
     clearAllCompleted() {
-      this.todos = this.todos.filter(todo => !todo.completed)
+      // this.todos = this.todos.filter(todo => !todo.completed)
+      this.deleteAllCompleted()
     },
     handleChangeTab(value) {
       this.filter = value
@@ -81,7 +98,10 @@ export default {
   mounted() {
     // console.log(this.id)
     console.log('todo mounted >>>')
-    this.fetchTodos()
+
+    if (this.todos && !this.todos.length) {
+      this.fetchTodos()
+    }
 
     // setTimeout(() => {
     //   this.tabValue = '2'
@@ -102,6 +122,13 @@ export default {
     if (global.confirm('确认离开')) {
       next()
     }
+  },
+  asyncData({ store, router }) {
+    if (store.state.user) {
+      return store.dispatch('fetchTodos')
+    }
+    router.replace('/login')
+    return Promise.resolve()
   }
 }
 </script>

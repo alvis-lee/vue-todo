@@ -3,5 +3,6 @@ export default {
   fname: 'li',
   lname: 'alvis',
   todos: [],
-  user: null
+  user: null,
+  loading: false
 }
